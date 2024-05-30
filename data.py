@@ -37,7 +37,7 @@ class Message:
 
 class User:
     user = {
-        'firstname': 'Ксения',
+        'firstName': 'Ксения',
         'lastname': 'Леонтьева',
         'address': 'Москва',
         'metroStation': 5,
