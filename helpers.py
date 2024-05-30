@@ -27,7 +27,7 @@ class Helpers:
         payload = {
             'login': login,
             'password': password,
-            'firstName': first_name
+            'firstname': first_name
         }
         return payload
 
@@ -41,7 +41,7 @@ class Helpers:
         payload = {
             'login': login,
             'password': password,
-            'firstName': first_name
+            'firstname': first_name
         }
         response = requests.post(Endpoint.CREATE_COURIER, data=payload)
         if response.status_code == 201:
@@ -50,6 +50,7 @@ class Helpers:
             login_pass.append(first_name)
         return login_pass
 
+
     @allure.step('Удаляем курьера')
     def delete_courier(self, login, password):
         response_post = requests.post(Endpoint.LOGIN_COURIER, data={
@@ -57,5 +58,5 @@ class Helpers:
             'password': password,
         })
         courier_id = response_post.json()['id']
-        requests.delete(f'{Endpoint.DELETE_COURIER}/{courier_id}')
+        requests.delete(f'{Endpoint.DELETE_COURIER}{courier_id}')
 

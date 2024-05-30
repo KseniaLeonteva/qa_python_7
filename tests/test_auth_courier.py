@@ -23,7 +23,7 @@ class TestAuthCourier:
             'login': '',
             'password': login_pass[1]
         })
-        assert r.status_code == 400 and Message.LOGING_COURIER_WITHOUT_DATA in r.text
+        assert r.status_code == 400 and Message.LOGING_COURIER_WITHOUT_DATA == r.text
         helpers.delete_courier(login_pass[0], login_pass[1])
 
 
@@ -34,7 +34,7 @@ class TestAuthCourier:
             'login': login_pass[0],
             'password': ''
         })
-        assert r.status_code == 400 and Message.LOGING_COURIER_WITHOUT_DATA in r.text
+        assert r.status_code == 400 and Message.LOGING_COURIER_WITHOUT_DATA == r.text
         helpers.delete_courier(login_pass[0], login_pass[1])
 
 
@@ -44,5 +44,5 @@ class TestAuthCourier:
             'login': 'ksenia',
             'password': 'qwerty1234'
         })
-        assert r.status_code == 404 and Message.LOGING_NOT_EXISTING_COURIER in r.text
+        assert r.status_code == 404 and Message.LOGING_NOT_EXISTING_COURIER == r.text
 
