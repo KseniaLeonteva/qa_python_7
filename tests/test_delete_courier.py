@@ -18,7 +18,7 @@ class TestDeleteCourier:
 
 
     @allure.step('Удалить несуществующего курьера')
-    def test_delete__not_existing_courier(self, helpers):
+    def test_delete_not_existing_courier(self, helpers):
         login_pass = helpers.register_new_courier_and_return_login_password()
         r = requests.post(Endpoint.LOGIN_COURIER, data={
             'login': login_pass[0],
