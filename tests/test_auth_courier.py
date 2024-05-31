@@ -1,12 +1,15 @@
 import allure
 import requests
+
+
 from data import Endpoint, Message
-from conftest import helpers, create_courier
+from conftest import create_courier
+from helpers import *
 
 
 class TestAuthCourier:
     @allure.step('Авторизация курьера')
-    def test_auth_courier(self, helpers, create_courier):
+    def test_auth_courier(self, create_courier):
         login_pass = create_courier
         r = requests.post(Endpoint.LOGIN_COURIER, data={
             'login': login_pass[0],
@@ -17,7 +20,7 @@ class TestAuthCourier:
 
 
     @allure.step('Авторизация курьера без логина')
-    def test_auth_without_login(self, helpers, create_courier):
+    def test_auth_without_login(self, create_courier):
         login_pass = create_courier
         r = requests.post(Endpoint.LOGIN_COURIER, data={
             'login': '',
@@ -28,7 +31,7 @@ class TestAuthCourier:
 
 
     @allure.step('Авторизация курьера без пароля')
-    def test_auth_without_password(self, helpers, create_courier):
+    def test_auth_without_password(self, create_courier):
         login_pass = create_courier
         r = requests.post(Endpoint.LOGIN_COURIER, data={
             'login': login_pass[0],
@@ -39,7 +42,7 @@ class TestAuthCourier:
 
 
     @allure.step('Авторизация несуществующего курьера')
-    def test_auth_not_existing_courier(self, helpers):
+    def test_auth_not_existing_courier(self):
         r = requests.post(Endpoint.LOGIN_COURIER, data={
             'login': 'ksenia',
             'password': 'qwerty1234'

@@ -2,13 +2,13 @@ import allure
 import requests
 import pytest
 from data import Endpoint, Message
-from conftest import helpers
+from helpers import *
 
 
 class TestCreateCourier:
     @allure.step('Создать курьера')
-    def test_create_courier(self, helpers):
-        login, password, first_name = helpers.generate_data()
+    def test_create_courier(self):
+        login, password, first_name = generate_data()
         payload = {
             'login': login,
             'password': password,
@@ -17,12 +17,12 @@ class TestCreateCourier:
         r = requests.post(Endpoint.CREATE_COURIER, data=payload)
         assert r.status_code == 201
         assert Message.CREATE_COURIER == r.text
-        helpers.delete_courier(login, password)
+        delete_courier(login, password)
 
 
     @allure.step('Создать двух одинаковых курьеров')
-    def test_create_existing_courier(self, helpers):
-        data = helpers.register_new_courier_and_return_login_password()
+    def test_create_existing_courier(self):
+        data = register_new_courier_and_return_login_password()
         r = requests.post(Endpoint.CREATE_COURIER, data={
             'login': data[0],
             'password': data[1],
@@ -34,8 +34,8 @@ class TestCreateCourier:
 
     @allure.step('Создать курьера без логина/пароля')
     @pytest.mark.parametrize('field', ['login', 'password'])
-    def test_create_courier_without_one_field(self, field, helpers):
-        payload = helpers.generate_data_payload()
+    def test_create_courier_without_one_field(self, field):
+        payload = generate_data_payload()
         del payload[field]
         r = requests.post(Endpoint.CREATE_COURIER, data=payload)
         assert r.status_code == 400
