@@ -11,5 +11,6 @@ class TestCreateOrder:
         payload = User.user
         payload['color'] = color
         r = requests.post(Endpoint.CREATE_ORDER, json=payload)
-        assert r.status_code == 201 and Message.CREATE_ORDER in r.text
+        assert r.status_code == 201
+        assert Message.CREATE_ORDER in r.text
 

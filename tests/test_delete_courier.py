@@ -14,7 +14,8 @@ class TestDeleteCourier:
         })
         courier_id = r.json()['id']
         r_delete = requests.delete(f'{Endpoint.DELETE_COURIER}{courier_id}')
-        assert r_delete.status_code == 200 and Message.DELETE_COURIER == r_delete.text
+        assert r_delete.status_code == 200
+        assert Message.DELETE_COURIER == r_delete.text
 
 
     @allure.step('Удалить несуществующего курьера')
@@ -26,11 +27,13 @@ class TestDeleteCourier:
         })
         courier_id = 666666
         r_delete = requests.delete(f'{Endpoint.DELETE_COURIER}{courier_id}')
-        assert r_delete.status_code == 404 and Message.DELETE_NOT_EXISTING_COURIER == r_delete.text
+        assert r_delete.status_code == 404
+        assert Message.DELETE_NOT_EXISTING_COURIER == r_delete.text
 
 
     @allure.step('Удалить курьера без id')
     def test_delete_courier_without_id(self, helpers):
         r = requests.delete(Endpoint.DELETE_COURIER)
-        assert r.status_code == 404 and Message.DELETE_COURIER_WITHOUT_ID == r.text
+        assert r.status_code == 404
+        assert Message.DELETE_COURIER_WITHOUT_ID == r.text
 

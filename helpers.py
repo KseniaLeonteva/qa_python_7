@@ -21,9 +21,7 @@ class Helpers:
 
 
     def generate_data_payload(self):
-        login = self.generate_random_string(10)
-        password = self.generate_random_string(10)
-        first_name = self.generate_random_string(10)
+        login, password, first_name = self.generate_data()
         payload = {
             'login': login,
             'password': password,
@@ -35,19 +33,12 @@ class Helpers:
     @allure.step('Генерируем логин, пароль и имя курьера')
     def register_new_courier_and_return_login_password(self):
         login_pass = []
-        login = self.generate_random_string(10)
-        password = self.generate_random_string(10)
-        first_name = self.generate_random_string(10)
-        payload = {
-            'login': login,
-            'password': password,
-            'firstname': first_name
-        }
+        payload = self.generate_data_payload()
         response = requests.post(Endpoint.CREATE_COURIER, data=payload)
         if response.status_code == 201:
-            login_pass.append(login)
-            login_pass.append(password)
-            login_pass.append(first_name)
+            login_pass.append(payload['login'])
+            login_pass.append(payload['password'])
+            login_pass.append(payload['firstname'])
         return login_pass
 
 

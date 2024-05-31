@@ -15,7 +15,8 @@ class TestCreateCourier:
             'firstname': first_name
         }
         r = requests.post(Endpoint.CREATE_COURIER, data=payload)
-        assert r.status_code == 201 and Message.CREATE_COURIER == r.text
+        assert r.status_code == 201
+        assert Message.CREATE_COURIER == r.text
         helpers.delete_courier(login, password)
 
 
@@ -27,7 +28,8 @@ class TestCreateCourier:
             'password': data[1],
             'firstname': data[2]
         })
-        assert r.status_code == 409 and Message.CREATE_EXISTING_COURIER == r.text
+        assert r.status_code == 409
+        assert Message.CREATE_EXISTING_COURIER == r.text
 
 
     @allure.step('Создать курьера без логина/пароля')
@@ -36,5 +38,6 @@ class TestCreateCourier:
         payload = helpers.generate_data_payload()
         del payload[field]
         r = requests.post(Endpoint.CREATE_COURIER, data=payload)
-        assert r.status_code == 400 and Message.CREATE_COURIER_WITHOUT_LOGIN == r.text
+        assert r.status_code == 400
+        assert Message.CREATE_COURIER_WITHOUT_LOGIN == r.text
 
